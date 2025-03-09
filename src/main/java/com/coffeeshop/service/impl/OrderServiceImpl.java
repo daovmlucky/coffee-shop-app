@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -44,6 +45,7 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new NotFoundException(ErrorCode.SHOP_NOT_FOUND));
         var queuesOfShop = shop.getQueues() + 1;
         shop.setQueues(queuesOfShop);
+        shop.setUpdateDate(LocalDateTime.now());
         shopRepository.save(shop);
 
         var orderDetailsJson = convertOrderDetailsToJson(orderRequest.getOrderDetails());
@@ -63,15 +65,18 @@ public class OrderServiceImpl implements OrderService {
         var order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new NotFoundException(ErrorCode.ORDER_NOT_FOUND));
         order.setStatus(Status.COMPLETED.name());
+        order.setUpdateDate(LocalDateTime.now());
         orderRepository.save(order);
 
         var queue = queueRepository.findFirstByShopIdAndCustomerIdOrderByPositionAsc(order.getShopId(), order.getCustomerId())
                 .orElseThrow(() -> new NotFoundException(ErrorCode.QUEUE_NOT_FOUND));
+        queue.setUpdateDate(LocalDateTime.now());
         queueRepository.delete(queue);
 
         var shop = shopRepository.findById(order.getShopId())
                 .orElseThrow(() -> new NotFoundException(ErrorCode.SHOP_NOT_FOUND));
         shop.setQueues(shop.getQueues() - 1);
+        shop.setUpdateDate(LocalDateTime.now());
         shopRepository.save(shop);
     }
 
@@ -81,15 +86,18 @@ public class OrderServiceImpl implements OrderService {
         var order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new NotFoundException(ErrorCode.ORDER_NOT_FOUND));
         order.setStatus(Status.CANCELLED.name());
+        order.setUpdateDate(LocalDateTime.now());
         orderRepository.save(order);
 
         var queue = queueRepository.findFirstByShopIdAndCustomerIdOrderByPositionAsc(order.getShopId(), order.getCustomerId())
                 .orElseThrow(() -> new NotFoundException(ErrorCode.QUEUE_NOT_FOUND));
+        queue.setUpdateDate(LocalDateTime.now());
         queueRepository.delete(queue);
 
         var shop = shopRepository.findById(order.getShopId())
                 .orElseThrow(() -> new NotFoundException(ErrorCode.SHOP_NOT_FOUND));
         shop.setQueues(shop.getQueues() - 1);
+        shop.setUpdateDate(LocalDateTime.now());
         shopRepository.save(shop);
     }
 
@@ -98,6 +106,8 @@ public class OrderServiceImpl implements OrderService {
                 .shopId(shopId)
                 .customerId(customerId)
                 .position(nextPosition)
+                .createDate(LocalDateTime.now())
+                .updateDate(LocalDateTime.now())
                 .build();
     }
 
@@ -107,6 +117,8 @@ public class OrderServiceImpl implements OrderService {
                 .shopId(shopId)
                 .orderDetails(orderDetails)
                 .status(Status.CONFIRMED.name())
+                .createDate(LocalDateTime.now())
+                .updateDate(LocalDateTime.now())
                 .build();
     }
 

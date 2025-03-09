@@ -33,9 +33,9 @@ public class Customer {
 
     @Column(name = "create_date", nullable = false, updatable = false)
     @CreatedDate
-    protected LocalDateTime createDate;
+    private LocalDateTime createDate;
 
     @Column(name = "update_date", nullable = false)
     @LastModifiedDate
-    protected LocalDateTime updateDate;
+    private LocalDateTime updateDate;
 }

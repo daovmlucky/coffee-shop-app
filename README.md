@@ -7,6 +7,18 @@
 4. **View Queue Position**: Allows customers to see their position in the queue and expected waiting time.
 5. **Exit Queue**: Allows customers to exit the queue and notify the shop to cancel the order.
 
+## Sequence Diagrams
+
+#### Place order
+
+![img.png](img.png)
+
+### Complete order
+![img_1.png](img_1.png)
+
+### Cancel order
+![img_2.png](img_2.png)
+
 ## Data Designs
 
 ### Customer Table
@@ -74,3 +86,59 @@ The `queue` table stores information about customer queues in shops.
 Indexes:
 - `shop_id`
 - `customer_id`
+
+## API Endpoints
+
+### Place order
+To place an order, use the following `curl` command:
+
+```sh
+curl --location 'http://localhost:8080/orders' \
+--header 'Content-Type: application/json' \
+--data '{
+  "customerName": "Tester 2",
+  "customerPhone": "0987654321",
+  "shopName": "Coffee Shop 2",
+  "orderDetails": {
+    "items": [
+      {
+        "name": "Coffee",
+        "quantity": 1
+      },
+      {
+        "name": "Espresso",
+        "quantity": 1
+      }
+    ]
+  }
+}'
+```
+
+Response
+The response will be in the following format:
+
+```json
+{
+  "orderId": 2,
+  "status": "PLACED"
+}
+```
+
+### Complete order
+
+To complete an order, use the following `curl` command:
+
+```sh
+curl --location --request POST 'http://localhost:8080/orders/4/complete' \
+--data ''
+```
+
+Response
+The response will be in the following format:
+
+```json
+{
+  "orderId": 4,
+  "status": "COMPLETED"
+}
+```

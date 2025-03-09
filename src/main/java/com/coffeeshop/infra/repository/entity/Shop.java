@@ -1,7 +1,9 @@
 package com.coffeeshop.infra.repository.entity;
 
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -15,6 +17,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "shop")
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +32,8 @@ public class Shop {
     @Column(name = "contact_details")
     private String contactDetails;
 
-    @Column(name = "menu")
+    @Type(type = "jsonb")
+    @Column(name = "menu", columnDefinition = "jsonb")
     private String menu;
 
     @Column(name = "queues", nullable = false)
@@ -47,9 +51,9 @@ public class Shop {
 
     @Column(name = "create_date", nullable = false, updatable = false)
     @CreatedDate
-    protected LocalDateTime createDate;
+    private LocalDateTime createDate;
 
     @Column(name = "update_date", nullable = false)
     @LastModifiedDate
-    protected LocalDateTime updateDate;
+    private LocalDateTime updateDate;
 }
