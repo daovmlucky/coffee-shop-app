@@ -1,0 +1,190 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: dao_vu
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: customer
+      changes:
+        - createTable:
+            tableName: customer
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: mobile_number
+                  type: VARCHAR(255)
+              - column:
+                  name: address
+                  type: VARCHAR(255)
+              - column:
+                  name: create_date
+                  type: TIMESTAMP
+                  constraints:
+                    defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: update_date
+                  type: TIMESTAMP
+                  constraints:
+                    defaultValueComputed: CURRENT_TIMESTAMP
+        - addUniqueConstraint:
+            tableName: customer
+            columnNames: mobile_number
+            constraintName: uq_customer_mobile_number
+
+  - changeSet:
+      id: 2
+      author: dao_vu
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: orders
+      changes:
+        - createTable:
+            tableName: orders
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: customer_id
+                  type: BIGINT
+              - column:
+                  name: shop_id
+                  type: BIGINT
+              - column:
+                  name: order_details
+                  type: JSON
+              - column:
+                  name: status
+                  type: VARCHAR(50)
+              - column:
+                  name: create_date
+                  type: TIMESTAMP
+                  constraints:
+                    defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: update_date
+                  type: TIMESTAMP
+                  constraints:
+                    defaultValueComputed: CURRENT_TIMESTAMP
+        - createIndex:
+            tableName: orders
+            columns:
+              - column:
+                  name: customer_id
+              - column:
+                  name: shop_id
+
+  - changeSet:
+      id: 3
+      author: dao_vu
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: shop
+      changes:
+        - createTable:
+            tableName: shop
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: location
+                  type: VARCHAR(255)
+              - column:
+                  name: contact_details
+                  type: VARCHAR(255)
+              - column:
+                  name: menu
+                  type: JSON
+              - column:
+                  name: queues
+                  type: INT
+              - column:
+                  name: opening_time
+                  type: TIME
+              - column:
+                  name: closing_time
+                  type: TIME
+              - column:
+                  name: version
+                  type: INT
+                  constraints:
+                    defaultValue: 1
+              - column:
+                  name: create_date
+                  type: TIMESTAMP
+                  constraints:
+                    defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: update_date
+                  type: TIMESTAMP
+                  constraints:
+                    defaultValueComputed: CURRENT_TIMESTAMP
+
+  - changeSet:
+      id: 4
+      author: dao_vu
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: queue
+      changes:
+        - createTable:
+            tableName: queue
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: shop_id
+                  type: BIGINT
+              - column:
+                  name: customer_id
+                  type: BIGINT
+              - column:
+                  name: position
+                  type: INT
+              - column:
+                  name: create_date
+                  type: TIMESTAMP
+                  constraints:
+                    defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: update_date
+                  type: TIMESTAMP
+                  constraints:
+                    defaultValueComputed: CURRENT_TIMESTAMP
+        - createIndex:
+            tableName: queue
+            columns:
+              - column:
+                  name: shop_id
+              - column:
+                  name: customer_id

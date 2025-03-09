@@ -1,0 +1,218 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1001
+      author: dao_vu
+      changes:
+        - insert:
+            tableName: customer
+            columns:
+              - column:
+                  name: name
+                  value: 'Tester 1'
+              - column:
+                  name: mobile_number
+                  value: '1234567890'
+              - column:
+                  name: address
+                  value: '123 Main St'
+              - column:
+                  name: create_date
+                  valueDate: '2025-03-08 10:00:00'
+              - column:
+                  name: update_date
+                  valueDate: '2025-03-08 10:00:00'
+        - insert:
+            tableName: customer
+            columns:
+              - column:
+                  name: name
+                  value: 'Tester 2'
+              - column:
+                  name: mobile_number
+                  value: '0987654321'
+              - column:
+                  name: address
+                  value: '456 Elm St'
+              - column:
+                  name: create_date
+                  valueDate: '2025-03-08 10:00:00'
+              - column:
+                  name: update_date
+                  valueDate: '2025-03-08 10:00:00'
+        - insert:
+            tableName: customer
+            columns:
+              - column:
+                  name: name
+                  value: 'Tester 3'
+              - column:
+                  name: mobile_number
+                  value: '0945654321'
+              - column:
+                  name: address
+                  value: '456 Elm St'
+              - column:
+                  name: create_date
+                  valueDate: '2025-03-08 10:00:00'
+              - column:
+                  name: update_date
+                  valueDate: '2025-03-08 10:00:00'
+
+  - changeSet:
+      id: 1002
+      author: dao_vu
+      changes:
+        - insert:
+            tableName: shop
+            columns:
+              - column:
+                  name: name
+                  value: 'Coffee Shop 1'
+              - column:
+                  name: location
+                  value: 'Downtown'
+              - column:
+                  name: contact_details
+                  value: '123-456-7890'
+              - column:
+                  name: menu
+                  value: '{"Latte": 3.5, "Espresso": 2.5}'
+              - column:
+                  name: queues
+                  valueNumeric: 2
+              - column:
+                  name: opening_time
+                  value: '07:00:00'
+              - column:
+                  name: closing_time
+                  value: '19:00:00'
+              - column:
+                  name: version
+                  valueNumeric: 2
+              - column:
+                  name: create_date
+                  valueDate: '2025-03-08 09:00:00'
+              - column:
+                  name: update_date
+                  valueDate: '2025-03-08 09:00:00'
+        - insert:
+            tableName: shop
+            columns:
+              - column:
+                  name: name
+                  value: 'Coffee Shop 2'
+              - column:
+                  name: location
+                  value: 'Downtown'
+              - column:
+                  name: contact_details
+                  value: '789-456-1234'
+              - column:
+                  name: menu
+                  value: '{"Coffee": 1.5, "Espresso": 2.5}'
+              - column:
+                  name: queues
+                  valueNumeric: 0
+              - column:
+                  name: opening_time
+                  value: '07:00:00'
+              - column:
+                  name: closing_time
+                  value: '19:00:00'
+              - column:
+                  name: version
+                  valueNumeric: 0
+              - column:
+                  name: create_date
+                  valueDate: '2025-03-08 09:00:00'
+              - column:
+                  name: update_date
+                  valueDate: '2025-03-08 09:00:00'
+
+  - changeSet:
+      id: 1003
+      author: dao_vu
+      changes:
+        - insert:
+            tableName: orders
+            columns:
+              - column:
+                  name: customer_id
+                  valueNumeric: 1
+              - column:
+                  name: shop_id
+                  valueNumeric: 1
+              - column:
+                  name: order_details
+                  value: '{"coffee": "Latte"}'
+              - column:
+                  name: status
+                  value: 'CONFIRMED'
+              - column:
+                  name: create_date
+                  valueDate: '2025-03-08 10:10:00'
+              - column:
+                  name: update_date
+                  valueDate: '2025-03-08 10:10:00'
+        - insert:
+            tableName: orders
+            columns:
+              - column:
+                  name: customer_id
+                  valueNumeric: 2
+              - column:
+                  name: shop_id
+                  valueNumeric: 1
+              - column:
+                  name: order_details
+                  value: '{"coffee": "Espresso"}'
+              - column:
+                  name: status
+                  value: 'CONFIRMED'
+              - column:
+                  name: create_date
+                  valueDate: '2025-03-08 10:15:00'
+              - column:
+                  name: update_date
+                  valueDate: '2025-03-08 10:15:00'
+
+  - changeSet:
+      id: 1004
+      author: dao_vu
+      changes:
+        - insert:
+            tableName: queue
+            columns:
+              - column:
+                  name: shop_id
+                  valueNumeric: 1
+              - column:
+                  name: customer_id
+                  valueNumeric: 1
+              - column:
+                  name: position
+                  valueNumeric: 1
+              - column:
+                  name: create_date
+                  valueDate: '2025-03-08 10:10:00'
+              - column:
+                  name: update_date
+                  valueDate: '2025-03-08 10:10:00'
+        - insert:
+            tableName: queue
+            columns:
+              - column:
+                  name: shop_id
+                  valueNumeric: 1
+              - column:
+                  name: customer_id
+                  valueNumeric: 2
+              - column:
+                  name: position
+                  valueNumeric: 2
+              - column:
+                  name: create_date
+                  valueDate: '2025-03-08 10:15:00'
+              - column:
+                  name: update_date
+                  valueDate: '2025-03-08 10:15:00'
